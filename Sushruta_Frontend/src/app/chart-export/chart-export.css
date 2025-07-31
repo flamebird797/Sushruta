@@ -1,0 +1,29 @@
+.export-wrapper {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: #111;
+}
+
+.svg-pair {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.svg-panel {
+  width: 48%;
+  border: 1px solid #ccc;
+}
+
+.notes-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.notes-table th,
+.notes-table td {
+  border: 1px solid #999;
+  padding: 8px;
+  text-align: left;
+}

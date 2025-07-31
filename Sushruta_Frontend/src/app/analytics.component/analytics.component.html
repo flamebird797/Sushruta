@@ -1,0 +1,436 @@
+<div class="chart-toggle-panel">
+  <div class="toggle-controls">
+    <button type="button" (click)="selectAllCharts()">Select All</button>
+    <button type="button" (click)="deselectAllCharts()">Deselect All</button>
+  </div>
+
+  <div class="toggle-checkboxes">
+    <label *ngFor="let chart of chartList">
+      <input type="checkbox" [(ngModel)]="chartToggles[chart.key]" />
+      {{ chart.label }}
+    </label>
+  </div>
+</div>
+
+<div class="mode-selector">
+  <label for="mode-select">Select Mode:</label>
+  <select id="mode-select" [(ngModel)]="activeMode" (change)="ngOnInit()">
+    <option value="pain">Pain</option>
+    <option value="scar">Scar</option>
+    <option value="bruise">Bruise</option>
+    <option value="burn">Burn</option>
+    <option value="discoloration">Discoloration</option>
+  </select>
+</div>
+
+
+✅ Updated HTML:
+
+<!-- 🔄 Temporal Pain Playback -->
+<div class="chart-card full-span">
+  <h3>🔄 Temporal Pain Playback</h3>
+  <p class="chart-desc">
+    Scrub through time to view how <strong>different symptom modes</strong> evolved across body regions. The 3D model will highlight historical levels frame by frame.
+  </p>
+
+  <div class="playback-controls">
+    <!-- ⏯ Play / Pause Button -->
+    <button 
+      (click)="togglePlayback()" 
+      class="play-btn" 
+      aria-label="Toggle playback">
+      {{ isPlaying ? '⏸ Pause' : '▶️ Play' }}
+    </button>
+
+    <!-- 🚀 Speed Control -->
+    <label for="playback-speed">
+      Speed:
+      <select id="playback-speed" [(ngModel)]="playbackSpeed" aria-label="Playback speed selector">
+        <option [value]="0.25">0.25x</option>
+        <option [value]="0.5">0.5x</option>
+        <option [value]="1">1x</option>
+        <option [value]="2">2x</option>
+        <option [value]="4">4x</option>
+      </select>
+    </label>
+
+    <!-- 🎯 Mode Selector -->
+    <label for="playback-mode">
+      Mode:
+      <select id="playback-mode"
+              [(ngModel)]="chartToggles['temporal'].mode"
+              (change)="renderPlaybackFrame(currentPlaybackIndex)"
+              aria-label="Playback data mode">
+        <option value="pain">Pain</option>
+        <option value="scar">Scar</option>
+        <option value="bruise">Bruise</option>
+        <option value="burn">Burn</option>
+        <option value="discoloration">Discoloration</option>
+      </select>
+    </label>
+
+    <!-- 🕒 Timestamp Display -->
+    <span class="playback-timestamp" aria-live="polite">
+      {{ playbackData[currentPlaybackIndex]?.timestamp | date: 'mediumDate' }}
+    </span>
+  </div>
+
+  <!-- 📽 Playback Scrubber -->
+  <div class="slider-container">
+    <label for="playback-slider">Playback Frame:</label>
+    <input id="playback-slider"
+           type="range"
+           min="0"
+           [max]="playbackData.length - 1"
+           [(ngModel)]="currentPlaybackIndex"
+           (input)="renderPlaybackFrame(currentPlaybackIndex)"
+           class="playback-slider"
+           aria-valuemin="0"
+           [attr.aria-valuemax]="playbackData.length - 1"
+           [attr.aria-valuenow]="currentPlaybackIndex"
+           aria-label="Playback frame slider" />
+  </div>
+</div>
+
+<!-- 🧍 3D Model Display -->
+<div #threeContainer
+     class="threejs-container"
+     style="width: 100%; height: 600px; background: #f9fafb;"
+     aria-label="3D model of body regions">
+</div>
+<div class="analytics-grid">
+  <!-- Chart 1: Average Pain per Region -->
+<!-- Chart 1: Average Value per Region -->
+<div class="chart-card" *ngIf="chartToggles['avgPain']">
+  <div class="chart-header">
+    <h3>📊 Average per Region</h3>
+    <label class="chart-mode-label">
+      Mode:
+      <select [(ngModel)]="chartToggles['avgPain'].mode" (change)="ngOnInit()">
+        <option value="pain">Pain</option>
+        <option value="scar">Scar</option>
+        <option value="bruise">Bruise</option>
+        <option value="burn">Burn</option>
+        <option value="discoloration">Discoloration</option>
+      </select>
+    </label>
+  </div>
+  <p class="chart-desc">
+    Displays the <strong>mean score</strong> for each region based on the selected mode across all entries.
+    Useful for identifying consistent high-symptom regions, chronic hotspots, or under-addressed clinical zones.
+  </p>
+  <canvas *ngIf="isBrowser"
+          baseChart
+          [type]="'bar'"
+          [data]="avgPainChartData"
+          [options]="barChartOptions"
+          aria-label="Bar chart showing average levels per region">
+  </canvas>
+</div>
+
+<!-- Chart 2: Frequency of Symptom Occurrence -->
+<div class="chart-card" *ngIf="chartToggles['frequency']">
+  <div class="chart-header">
+    <h3>🔥 Top 5 Frequent Regions</h3>
+    <label class="chart-mode-label">
+      Mode:
+      <select [(ngModel)]="chartToggles['frequency'].mode" (change)="ngOnInit()">
+        <option value="pain">Pain</option>
+        <option value="scar">Scar</option>
+        <option value="bruise">Bruise</option>
+        <option value="burn">Burn</option>
+        <option value="discoloration">Discoloration</option>
+      </select>
+    </label>
+  </div>
+  <p class="chart-desc">
+    Shows which regions were most frequently marked in the selected mode.
+    Highlights recurrence patterns related to posture, repetitive stress, or unresolved pathology.
+  </p>
+  <canvas *ngIf="isBrowser"
+          baseChart
+          [type]="'pie'"
+          [data]="freqChartData"
+          [options]="pieChartOptions">
+  </canvas>
+</div>
+  <!-- Chart 3: Pain Over Time -->
+<div class="chart-card full-span" *ngIf="chartToggles['overTime']">
+  <div class="chart-header">
+    <h3>📈 Over Time</h3>
+    <div class="chart-controls">
+      <label class="chart-mode-label">
+        Mode:
+        <select [(ngModel)]="chartToggles['overTime'].mode" (change)="ngOnInit()">
+          <option value="pain">Pain</option>
+          <option value="scar">Scar</option>
+          <option value="bruise">Bruise</option>
+          <option value="burn">Burn</option>
+          <option value="discoloration">Discoloration</option>
+        </select>
+      </label>
+
+      <label for="region-select">
+        Region:
+        <select id="region-select"
+                [(ngModel)]="selectedRegion"
+                (ngModelChange)="onRegionChange($event)">
+          <option *ngFor="let region of availableRegions" [value]="region">
+            {{ region.replaceAll('_', ' ') }}
+          </option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <p class="chart-desc">
+    Tracks how the selected symptom in the selected region changes over time. 
+    Useful for observing progression, recovery, or flare-up patterns in response to treatment or activity.
+  </p>
+
+  <canvas *ngIf="isBrowser"
+          baseChart
+          [type]="'line'"
+          [data]="painOverTimeChartData"
+          [options]="lineChartOptions">
+  </canvas>
+</div>
+
+
+  <!-- Chart 4: Pain Symmetry Analyzer -->
+ <div class="chart-card full-span" *ngIf="chartToggles['symmetry']">
+  <div class="chart-header">
+    <h3>⚖️ Symmetry Analysis</h3>
+    <label class="chart-mode-label">
+      Mode:
+      <select [(ngModel)]="chartToggles['symmetry'].mode" (change)="ngOnInit()">
+        <option value="pain">Pain</option>
+        <option value="scar">Scar</option>
+        <option value="bruise">Bruise</option>
+        <option value="burn">Burn</option>
+        <option value="discoloration">Discoloration</option>
+      </select>
+    </label>
+  </div>
+
+  <p class="chart-desc">
+    Compares left and right body regions for asymmetry in the selected symptom mode. 
+    Useful for detecting imbalances, compensations, or lateralized dysfunction.
+  </p>
+
+  <canvas *ngIf="isBrowser"
+          baseChart
+          [type]="'bar'"
+          [data]="symmetryChartData"
+          [options]="symmetryChartOptions">
+  </canvas>
+</div>
+
+  <div class="chart-card full-span" *ngIf="chartToggles['fluctuation']">
+  <div class="chart-header">
+    <h3>📉 Fluctuation Index</h3>
+    <label class="chart-mode-label">
+      Mode:
+      <select [(ngModel)]="chartToggles['fluctuation'].mode" (change)="ngOnInit()">
+        <option value="pain">Pain</option>
+        <option value="scar">Scar</option>
+        <option value="bruise">Bruise</option>
+        <option value="burn">Burn</option>
+        <option value="discoloration">Discoloration</option>
+      </select>
+    </label>
+  </div>
+  <p class="chart-desc">
+    Shows how variable each region’s level has been over time for the selected symptom. 
+    High volatility suggests instability, intermittent flare-ups, or poor control.
+  </p>
+  <canvas *ngIf="isBrowser"
+          baseChart
+          [type]="'bar'"
+          [data]="fluctuationChartData"
+          [options]="fluctuationChartOptions">
+  </canvas>
+</div>
+<div class="chart-card full-span" *ngIf="chartToggles['coOccurrence']">
+  <div class="chart-header">
+    <h3>🧩 Co-occurrence Matrix</h3>
+    <label class="chart-mode-label">
+      Mode:
+      <select [(ngModel)]="chartToggles['coOccurrence'].mode" (change)="ngOnInit()">
+        <option value="pain">Pain</option>
+        <option value="scar">Scar</option>
+        <option value="bruise">Bruise</option>
+        <option value="burn">Burn</option>
+        <option value="discoloration">Discoloration</option>
+      </select>
+    </label>
+  </div>
+  <p class="chart-desc">
+    Visualizes how often two regions show elevated levels of the selected symptom in the same entry. 
+    Useful for uncovering region-linking patterns, compensations, or syndromic clues.
+  </p>
+
+  <!-- 💡 Canvas must fill available space for table-like layout -->
+  <div style="height: 800px; overflow-x: auto;">
+    <table class="co-occurrence-table">
+  <thead>
+    <tr>
+      <th>Region A</th>
+      <th>Region B</th>
+      <th>Co-occurrences</th>
+      <th>Normalized</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let pair of coPairs">
+      <td>{{ pair.regionA.replaceAll('_', ' ') }}</td>
+      <td>{{ pair.regionB.replaceAll('_', ' ') }}</td>
+      <td>{{ pair.raw }}</td>
+      <td>
+        <span
+          [ngStyle]="{ 
+            'background-color': getCoOccurrenceColor(pair.normalized), 
+            'padding': '2px 8px', 
+            'border-radius': '4px',
+            'color': '#000',
+            'display': 'inline-block',
+            'min-width': '60px',
+            'text-align': 'center'
+          }"
+        >
+          {{ (pair.normalized * 100).toFixed(1) }}%
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</div>
+
+<div class="chart-card full-span" *ngIf="chartToggles['persistence']">
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h3>🕒 {{ chartToggles['persistence'].mode | titlecase }} Persistence</h3>
+    <div style="display: flex; gap: 1rem; align-items: center;">
+      <label>
+        Mode:
+        <select [(ngModel)]="chartToggles['persistence'].mode" (change)="ngOnInit()">
+          <option value="pain">Pain</option>
+          <option value="scar">Scar</option>
+          <option value="bruise">Bruise</option>
+          <option value="burn">Burn</option>
+          <option value="discoloration">Discoloration</option>
+        </select>
+      </label>
+      <button class="toggle-btn" (click)="togglePersistentOnly()">
+        {{ showPersistentOnly ? 'Show All' : 'Show Persistent Only (≥ 60%)' }}
+      </button>
+    </div>
+  </div>
+  <p class="chart-desc">
+    Displays the percentage of entries where each region had moderate or higher {{ chartToggles['persistence'].mode }} (level ≥ 4).
+    Highlights chronic zones active across multiple check-ins.
+  </p>
+  <canvas *ngIf="isBrowser"
+          baseChart
+          [type]="'bar'"
+          [data]="persistenceChartData"
+          [options]="persistenceChartOptions">
+  </canvas>
+</div>
+<div class="chart-card full-span" *ngIf="chartToggles['timeToResolution']">
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h3>⏱️ Time to {{ chartToggles['timeToResolution'].mode | titlecase }} Resolution</h3>
+    <label>
+      Mode:
+      <select [(ngModel)]="chartToggles['timeToResolution'].mode" (change)="ngOnInit()">
+        <option value="pain">Pain</option>
+        <option value="scar">Scar</option>
+        <option value="bruise">Bruise</option>
+        <option value="burn">Burn</option>
+        <option value="discoloration">Discoloration</option>
+      </select>
+    </label>
+  </div>
+  <p class="chart-desc">
+    Calculates how long (in days) it took for each region’s {{ chartToggles['timeToResolution'].mode }} level to drop below 3 and remain low.
+    Useful for tracking healing speed and identifying persistent regions.
+  </p>
+  <canvas *ngIf="isBrowser"
+          baseChart
+          [type]="'bar'"
+          [data]="timeToResolutionChartData"
+          [options]="timeToResolutionChartOptions">
+  </canvas>
+</div>
+
+<div class="chart-card full-span" *ngIf="chartToggles['trendSlope']">
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h3>📐 {{ chartToggles['trendSlope'].mode | titlecase }} Trend Slope</h3>
+    <label>
+      Mode:
+      <select [(ngModel)]="chartToggles['trendSlope'].mode" (change)="ngOnInit()">
+        <option value="pain">Pain</option>
+        <option value="scar">Scar</option>
+        <option value="bruise">Bruise</option>
+        <option value="burn">Burn</option>
+        <option value="discoloration">Discoloration</option>
+      </select>
+    </label>
+  </div>
+  <p class="chart-desc">
+    Uses linear regression to determine whether {{ chartToggles['trendSlope'].mode }} is improving, worsening, or staying stable across regions over time.
+  </p>
+  <canvas *ngIf="isBrowser"
+          baseChart
+          [type]="'bar'"
+          [data]="trendSlopeChartData"
+          [options]="trendSlopeChartOptions">
+  </canvas>
+</div>
+
+<div class="chart-card full-span" *ngIf="chartToggles['odeSim'].show">
+  <h3>🧮 ODE Simulation (Euler)</h3>
+  <p class="chart-desc">
+    This simulation projects how reported symptom levels (e.g., pain) might evolve over time in each affected region, using a simple differential equation model.
+    It helps clinicians estimate whether a condition is likely to worsen or stabilize without intervention, assuming consistent underlying progression.
+  </p>s
+
+  <canvas baseChart
+          [data]="odeSimChartData"
+          [options]="odeSimChartOptions"
+          chartType="line">
+  </canvas>
+</div>
+
+  <!-- Summary Stats -->
+<div class="chart-card full-span">
+  <h3>🧠 Clinical Insights</h3>
+  <ul class="clinical-insights">
+    <li>
+      <strong>Total Pain Burden:</strong> {{ totalPainBurden }} – the cumulative sum of all pain scores across all regions and entries. Reflects overall pain volume over time.
+    </li>
+    <li>
+      <strong>Severe Regions:</strong> {{ severeRegionCount }} – number of distinct regions where pain reached level 7 or higher at least once. Flags acute/high-intensity pain areas.
+    </li>
+    <li>
+      <strong>Pain Intensity Distribution:</strong>
+      Mild {{ intensityPercentages.mild }}%, Moderate {{ intensityPercentages.moderate }}%, Severe {{ intensityPercentages.severe }}% –
+      the percentage of all pain reports in each intensity category. Helps gauge the typical pain severity pattern.
+    </li>
+    <li>
+      <strong>Persistent Pain Regions:</strong> {{ persistentPainRegions.join(', ') || 'None' }} –
+      regions that had moderate or higher pain (≥ 4) in 60% or more of entries. Indicates chronic or consistently active pain zones.
+    </li>
+    <li>
+      <strong>Progression:</strong>
+      Improved: {{ progression.improved }},
+      Worsened: {{ progression.worsened }},
+      Stable: {{ progression.stable }} –
+      change in pain levels from the first to last report. Highlights trends in healing or deterioration.
+    </li>
+    <li>
+      <strong>Asymmetry Flags:</strong> {{ asymmetryFlags.join(', ') || 'None' }} –
+      left/right region pairs with ≥ 5-point difference in average pain level. May indicate postural imbalance or unilateral injury.
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,214 @@
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1.5rem;
+  padding: 1.5rem;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.chart-card {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 1.2rem;
+  transition: box-shadow 0.2s ease;
+}
+
+.chart-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.chart-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.full-span {
+  grid-column: 1 / -1;
+}
+
+.dropdown-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.dropdown-wrapper label {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.dropdown-wrapper select {
+  padding: 0.4rem 0.6rem;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+ul {
+  padding-left: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #444;
+}
+
+ul li {
+  margin-bottom: 0.4rem;
+}
+.chart-desc {
+  font-size: 0.88rem;
+  color: #4b5563;
+  margin-top: -0.3rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+clinical-insights {
+  font-size: 0.92rem;
+  padding-left: 1rem;
+  line-height: 1.6;
+  color: #374151;
+  margin-top: 0.5rem;
+}
+.clinical-insights li {
+  margin-bottom: 0.6rem;
+}
+
+
+.chart-toggle-panel input[type='checkbox'] {
+  transform: scale(1.1);
+}
+.toggle-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.toggle-controls button {
+  background-color: #e0e7ff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #1e3a8a;
+  font-weight: 500;
+}
+
+.toggle-controls button:hover {
+  background-color: #c7d2fe;
+}
+
+.playback-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.play-btn {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.play-btn:hover {
+  background-color: #2563eb;
+}
+
+.playback-slider {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  appearance: none;
+  background-color: #cbd5e1;
+  outline: none;
+  transition: background 0.2s;
+}
+
+.playback-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background-color: #2563eb;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  margin-top: -4px;
+}
+
+.playback-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background-color: #2563eb;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+.playback-timestamp {
+  font-size: 0.85rem;
+  color: #4b5563;
+  min-width: 120px;
+}
+
+.threejs-container {
+  width: 100%;
+  height: 600px;  /* ✅ Or whatever works visually */
+  background: #f9fafb; /* ✅ Optional: helps confirm it's rendering */
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.chart-header h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.chart-mode-label {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.chart-mode-label select {
+  padding: 0.35rem 0.5rem;
+  font-size: 0.88rem;
+  border-radius: 5px;
+  border: 1px solid #d1d5db;
+  background-color: white;
+  color: #111827;
+}
+
+.co-occurrence-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.co-occurrence-table th,
+.co-occurrence-table td {
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  text-align: center;
+}

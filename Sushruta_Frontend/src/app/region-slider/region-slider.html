@@ -1,0 +1,42 @@
+<div *ngIf="visible" class="slider-overlay">
+  <div class="slider-modal" #modal>
+    <div
+      class="slider-header"
+      (mousedown)="startDrag($event, modal)"
+    >
+      {{ regionId.replaceAll('_', ' ') }}
+    </div>
+
+    <div class="slider-section">
+      <label>Pain Level: {{ level() }}</label>
+      <input
+        type="range"
+        class="range-slider"
+        min="0"
+        max="10"
+        [value]="level()"
+        (input)="onSliderInput($event)"
+      />
+    </div>
+
+    <textarea
+      class="note-box"
+      placeholder="Enter observations or notes..."
+      [value]="note()"
+      (input)="onNoteInput($event)"
+    ></textarea>
+
+    <button class="dictate-btn" (click)="startSpeechToText()" [disabled]="!isBrowser || isDictating()">
+      🎤 Start Dictation
+    </button>
+
+    <div *ngIf="isDictating()" class="listening-indicator">Listening...</div>
+
+    <button class="speak-btn" (click)="speakNote()" [disabled]="!isBrowser">🔊 Speak Note</button>
+
+    <div class="button-row">
+      <button class="save-btn" (click)="onSave()">✅ Save</button>
+      <button class="cancel-btn" (click)="onCancel()">❌ Cancel</button>
+    </div>
+  </div>
+</div>

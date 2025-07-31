@@ -1,0 +1,32 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: #0d1117; /* Full page dark background */
+  color: #f0f6fc;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.app-wrapper {
+  min-height: 100vh;
+  background-color: #0d1117; /* Match rest of app */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Optional: scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #30363d;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background-color: #161b22;
+}

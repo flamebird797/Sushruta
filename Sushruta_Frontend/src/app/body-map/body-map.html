@@ -1,0 +1,227 @@
+<div class="body-map-wrapper" [class.readonly-mode]="readonly">
+
+  <!-- === LEFT: 3D MODEL AREA === -->
+  <div class="threejs-container" #threeContainer></div>
+
+<div class="control-wrapper" [class.collapsed]="isPanelCollapsed">
+
+    <button class="collapse-toggle" (click)="togglePanel()">
+    {{ isPanelCollapsed ? '➡️' : '⬅️' }}
+  </button>
+
+  <div class="control-panel" *ngIf="!isPanelCollapsed && !readonly">
+
+    <div *ngIf="isListening" class="listening-indicator"></div>
+
+    <!-- === Form Fields === -->
+    <div class="form-group">
+      <label for="chart-name">Chart Name</label>
+      <input id="chart-name" [(ngModel)]="chartName" placeholder="e.g. Morning Checkup" />
+    </div>
+    <div class="form-group">
+      <label for="user-id">Patient Name</label>
+      <input id="user-id" [(ngModel)]="userId" placeholder="Enter patient name" />
+    </div>
+    <div class="form-group">
+      <label for="disease">Diagnosis</label>
+      <input id="disease" [(ngModel)]="disease" placeholder="e.g. Fibromyalgia, Sciatica" />
+    </div>
+    <div *ngIf="chartName" class="current-chart">
+      📌 Loaded Chart: <strong>{{ chartName }}</strong>
+    </div>
+
+    <div class="form-group mode-selector">
+  <label for="mode">Annotation Mode</label>
+  <select id="mode" [(ngModel)]="activeMode" (change)="loadModel()">
+    <option value="pain">Pain</option>
+    <option value="scar">Scarring</option>
+    <option value="bruise">Bruising</option>
+    <option value="burn">Burn</option>
+    <option value="discoloration">Discoloration</option>
+  </select>
+</div>
+
+    <!-- === Button Groups === -->
+    <div class="button-section">
+      <div class="button-group">
+        <div class="button-group-title">Chart</div>
+        <button class="btn-save" (click)="saveToBackend()">💾 Save Chart</button>
+        <button class="btn-load" (click)="loadPrevious()">⤓ Load Previous</button>
+        <button class="btn-new" (click)="startNewChart()">➕ New Chart</button>
+        <button class="btn-reset" (click)="resetAll()">🗑️ Reset</button>
+      </div>
+
+      <div class="button-group">
+        <div class="button-group-title">Export</div>
+        <button class="btn-export" (click)="exportToCSV()">📥 Export CSV</button>
+        <button class="btn-export" (click)="triggerPDFExport()">🗎 Export PDF</button>
+      </div>
+
+      <div class="button-group">
+        <div class="button-group-title">Insights</div>
+        <button class="btn-analytics" [disabled]="!userId" (click)="goToAnalytics()">📊 Analytics</button>
+        <button class="btn-save" (click)="generateSummary()">🧠 Generate AI Summary</button>
+      </div>
+    </div>
+
+    <!-- === Voice Assistant === -->
+<div class="voice-help-toggle" (click)="showVoiceHelp = !showVoiceHelp">
+  🎙️ Voice Assistant Commands
+</div>
+
+<div *ngIf="showVoiceHelp" class="voice-help-box">
+  <div class="voice-help-panel">
+    <h3>🗣️ Voice Assistant: Command Reference</h3>
+
+    <h4>📋 Chart Actions</h4>
+    <ul>
+      <li><code>Reset all</code> – Clear all data</li>
+      <li><code>Save chart</code> – Save the current chart</li>
+      <li><code>Load chart</code> – Load previous chart</li>
+      <li><code>New chart</code> – Start a new chart</li>
+      <li><code>Export PDF</code> – Get export instructions</li>
+      <li><code>Summarize</code> or <code>Give me a summary</code> – Generate chart summary</li>
+    </ul>
+
+    <h4>📈 Query Mode Level</h4>
+    <ul>
+      <li><code>What's the pain level in left thigh</code></li>
+      <li><code>What is the bruise level on right cheek</code></li>
+    </ul>
+
+    <h4>🎚️ Set Mode Level</h4>
+    <ul>
+      <li><code>Set scar to 5 on forehead</code></li>
+      <li><code>Set burn level to 2 in left wrist</code></li>
+    </ul>
+
+    <h4>🧽 Clear Notes</h4>
+    <ul>
+      <li><code>Clear note on lower back left</code></li>
+      <li><code>Clear note for right jaw</code></li>
+    </ul>
+
+    <h4>📝 Add Notes</h4>
+    <ul>
+      <li><code>Note to right thigh: feels tight after run</code></li>
+      <li><code>Back of scalp is itchy</code></li>
+      <li><code>Feels tender – add note to chest left</code></li>
+    </ul>
+
+    <h4>🗺️ Region Names & Aliases</h4>
+    <div class="region-alias-columns">
+      <ul>
+        <li>forehead</li>
+        <li>scalp front / front of scalp</li>
+        <li>scalp back / back of scalp</li>
+        <li>left/right temple</li>
+        <li>left/right eye</li>
+        <li>left/right ear</li>
+        <li>left/right cheek</li>
+        <li>left/right jaw</li>
+        <li>nose</li>
+        <li>mouth</li>
+        <li>neck front / front neck</li>
+        <li>neck back / back of neck</li>
+        <li>left/right shoulder</li>
+        <li>left/right armpit</li>
+        <li>left/right bicep</li>
+        <li>left/right tricep</li>
+        <li>left/right elbow</li>
+        <li>left/right forearm</li>
+        <li>left/right wrist</li>
+        <li>left/right hand</li>
+        <li>left/right chest</li>
+        <li>sternum</li>
+        <li>epigastric</li>
+        <li>umbilical</li>
+        <li>hypogastric</li>
+        <li>left/right hypochondriac</li>
+        <li>left/right lumbar</li>
+        <li>left/right iliac</li>
+        <li>groin</li>
+        <li>pelvis / pelvic area</li>
+        <li>upper/lower back left/right</li>
+        <li>spine upper/middle/lower</li>
+        <li>left/right thigh</li>
+        <li>left/right knee</li>
+        <li>left/right shin</li>
+        <li>left/right calf</li>
+        <li>left/right ankle</li>
+        <li>left/right foot</li>
+        <li>left/right glute / buttock</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    <!-- === Chart History === -->
+    <div *ngIf="showHistoryPanel" class="history-panel">
+      <h3>Select a Chart to Load</h3>
+      <ul>
+        <li *ngFor="let chart of chartHistory" (click)="loadChart(chart)" class="clickable-link">
+          🗂️ {{ chart.chartName }} - {{ chart.timestamp | date:'short' }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- === Pain Scale === -->
+     <div class="gradient-mode-label">
+  {{ activeMode.charAt(0).toUpperCase() + activeMode.slice(1) }} Level
+</div>
+    <div class="gradient-legend-wrapper">
+  <div class="gradient-label">0</div>
+  <div
+    class="gradient-bar"
+    [ngStyle]="{'background': getLegendGradient()}">
+  </div>
+  <div class="gradient-label">10</div>
+</div>
+
+    <!-- === Saved Charts List === -->
+    <div class="chart-history">
+      <label>Saved Charts:</label>
+      <ul>
+        <li *ngFor="let name of chartNames">{{ name }}</li>
+      </ul>
+    </div>
+
+    <!-- === AI Summary Output === -->
+    <div *ngIf="summaryText()" class="ai-summary-box">
+      <strong>AI Summary:</strong>
+      <p>{{ summaryText() }}</p>
+    </div>
+  </div>
+  </div>
+
+  <!-- === Tooltip === -->
+  <div *ngIf="!readonly && hoveredRegion"
+       class="region-tooltip"
+       [style.left.px]="tooltipX"
+       [style.top.px]="tooltipY">
+    {{ hoveredRegion.replaceAll('_', ' ') }}
+  </div>
+
+  <!-- === Modals === -->
+  <app-region-slider
+  *ngIf="!readonly && showSlider"
+    [visible]="showSlider"
+    [regionId]="selectedRegion"
+    [initialLevel]="tempLevel"
+    [initialNote]="tempNote"
+    (save)="saveRegion($event)"
+    (cancel)="cancelRegionEdit()"
+    (levelChange)="onLiveLevelChange($event)">
+  </app-region-slider>
+
+  <app-chart-export
+    style="display: none;"
+    #exportComponent
+    [chartName]="chartName"
+    [userId]="userId"
+    [activeMode]="activeMode"
+    [regionData]="regionData"
+    [frontImage]="frontImage"
+    [backImage]="backImage">
+  </app-chart-export>
+</div>

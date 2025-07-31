@@ -1,0 +1,126 @@
+.slider-modal {
+  position: fixed;
+    top: 20%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 340px;
+  background-color: var(--card-dark);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-soft);
+  z-index: 1000;
+  text-align: center;
+  font-family: var(--font-sans);
+  color: var(--text-light);
+  border: 1px solid var(--border-dark);
+}
+
+.slider-header {
+  cursor: move;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.6rem;
+  background-color: #1f2937;
+  color: var(--text-light);
+  border-bottom: 1px solid var(--border-dark);
+  border-top-left-radius: var(--radius);
+  border-top-right-radius: var(--radius);
+  user-select: none;
+  margin: -1.5rem -1.5rem 1rem -1.5rem;
+}
+
+.region-title {
+  margin-bottom: 1rem;
+  font-weight: bold;
+  font-size: 1rem;
+  text-transform: capitalize;
+  color: var(--text-light);
+}
+
+.slider-section {
+  margin-bottom: 1.25rem;
+}
+
+.range-slider {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.note-box {
+  width: 100%;
+  height: 70px;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  resize: vertical;
+  border: 1px solid var(--border-dark);
+  background-color: #1f2937;
+  color: var(--text-light);
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  gap: 0.5rem;
+}
+
+.save-btn,
+.cancel-btn,
+.dictate-btn,
+.speak-btn,
+.stop-btn {
+  flex: 1;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.save-btn {
+  background-color: var(--accent-blue);
+}
+.cancel-btn {
+  background-color: #d91a17;
+}
+.dictate-btn {
+  background-color: #238636;
+}
+.speak-btn {
+  background-color: #8250df;
+}
+.stop-btn {
+  background-color: #f85149;
+}
+
+.save-btn:hover,
+.cancel-btn:hover,
+.dictate-btn:hover,
+.speak-btn:hover,
+.stop-btn:hover {
+  opacity: 0.92;
+}
+
+.speak-btn:disabled {
+  background-color: #4b5563;
+  cursor: not-allowed;
+}
+
+.listening-indicator {
+  margin-top: 0.5rem;
+  font-weight: bold;
+  color: var(--illini-orange);
+  animation: pulse 1.5s infinite;
+  font-size: 0.85rem;
+}
+
+@keyframes pulse {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.3; }
+  100% { opacity: 1; }
+}

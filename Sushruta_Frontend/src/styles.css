@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+  --illini-blue: #13294B;
+  --illini-orange: #FF552E;
+  --neutral-light: #F9FAFB;
+  --neutral-border: #E5E7EB;
+  --text-primary: #1F2937;
+  --text-secondary: #6B7280;
+  --white: #ffffff;
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --radius: 12px;
+  --font-ui: 'Inter', 'Segoe UI', 'Helvetica Neue', sans-serif;
+}
+
+
+body {
+  background-color: var(--bg);
+  font-family: var(--font);
+  color: var(--illini-blue);
+  line-height: 1.6;
+}

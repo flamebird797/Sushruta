@@ -1,0 +1,11 @@
+<div class="analytics-page-wrapper">
+  <h2>📈 Pain Chart Analytics</h2>
+
+  <label>
+    User ID:
+    <input [(ngModel)]="userId" placeholder="Enter User ID" />
+  </label>
+
+  <app-timeline *ngIf="userId" [userId]="userId"></app-timeline>
+  <app-analytics *ngIf="userId" [userId]="userId"></app-analytics>
+</div>

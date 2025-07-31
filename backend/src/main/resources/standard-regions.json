@@ -1,0 +1,288 @@
+{
+  "head": {
+    "forehead": {
+      "level": 0,
+      "note": ""
+    },
+    "scalp_front": {
+      "level": 0,
+      "note": ""
+    },
+    "scalp_back": {
+      "level": 0,
+      "note": ""
+    },
+    "temple_left": {
+      "level": 0,
+      "note": ""
+    },
+    "temple_right": {
+      "level": 0,
+      "note": ""
+    },
+    "eye_left": {
+      "level": 0,
+      "note": ""
+    },
+    "eye_right": {
+      "level": 0,
+      "note": ""
+    },
+    "ear_left": {
+      "level": 0,
+      "note": ""
+    },
+    "ear_right": {
+      "level": 0,
+      "note": ""
+    },
+    "cheek_left": {
+      "level": 0,
+      "note": ""
+    },
+    "cheek_right": {
+      "level": 0,
+      "note": ""
+    },
+    "jaw_left": {
+      "level": 0,
+      "note": ""
+    },
+    "jaw_right": {
+      "level": 0,
+      "note": ""
+    },
+    "nose": {
+      "level": 0,
+      "note": ""
+    },
+    "mouth": {
+      "level": 0,
+      "note": ""
+    }
+  },
+  "neck": {
+    "neck_front": {
+      "level": 0,
+      "note": ""
+    },
+    "neck_back": {
+      "level": 0,
+      "note": ""
+    }
+  },
+  "shoulders": {
+    "shoulder_left": {
+      "level": 0,
+      "note": ""
+    },
+    "shoulder_right": {
+      "level": 0,
+      "note": ""
+    },
+    "armpit_left": {
+      "level": 0,
+      "note": ""
+    },
+    "armpit_right": {
+      "level": 0,
+      "note": ""
+    }
+  },
+  "arms": {
+    "bicep_left": {
+      "level": 0,
+      "note": ""
+    },
+    "bicep_right": {
+      "level": 0,
+      "note": ""
+    },
+    "tricep_left": {
+      "level": 0,
+      "note": ""
+    },
+    "tricep_right": {
+      "level": 0,
+      "note": ""
+    },
+    "elbow_left": {
+      "level": 0,
+      "note": ""
+    },
+    "elbow_right": {
+      "level": 0,
+      "note": ""
+    },
+    "forearm_left": {
+      "level": 0,
+      "note": ""
+    },
+    "forearm_right": {
+      "level": 0,
+      "note": ""
+    },
+    "wrist_left": {
+      "level": 0,
+      "note": ""
+    },
+    "wrist_right": {
+      "level": 0,
+      "note": ""
+    },
+    "hand_left": {
+      "level": 0,
+      "note": ""
+    },
+    "hand_right": {
+      "level": 0,
+      "note": ""
+    }
+  },
+  "torso_front": {
+    "chest_left": {
+      "level": 0,
+      "note": ""
+    },
+    "chest_right": {
+      "level": 0,
+      "note": ""
+    },
+    "sternum": {
+      "level": 0,
+      "note": ""
+    },
+    "epigastric": {
+      "level": 0,
+      "note": ""
+    },
+    "umbilical": {
+      "level": 0,
+      "note": ""
+    },
+    "hypogastric": {
+      "level": 0,
+      "note": ""
+    },
+    "left_hypochondriac": {
+      "level": 0,
+      "note": ""
+    },
+    "right_hypochondriac": {
+      "level": 0,
+      "note": ""
+    },
+    "left_lumbar": {
+      "level": 0,
+      "note": ""
+    },
+    "right_lumbar": {
+      "level": 0,
+      "note": ""
+    },
+    "left_iliac": {
+      "level": 0,
+      "note": ""
+    },
+    "right_iliac": {
+      "level": 0,
+      "note": ""
+    },
+    "groin": {
+      "level": 0,
+      "note": ""
+    },
+    "pelvic_area": {
+      "level": 0,
+      "note": ""
+    }
+  },
+  "torso_back": {
+    "back_upper_left": {
+      "level": 0,
+      "note": ""
+    },
+    "back_upper_right": {
+      "level": 0,
+      "note": ""
+    },
+    "back_lower_left": {
+      "level": 0,
+      "note": ""
+    },
+    "back_lower_right": {
+      "level": 0,
+      "note": ""
+    },
+    "spine_upper": {
+      "level": 0,
+      "note": ""
+    },
+    "spine_middle": {
+      "level": 0,
+      "note": ""
+    },
+    "spine_lower": {
+      "level": 0,
+      "note": ""
+    }
+  },
+  "legs": {
+    "thigh_left": {
+      "level": 0,
+      "note": ""
+    },
+    "thigh_right": {
+      "level": 0,
+      "note": ""
+    },
+    "knee_left": {
+      "level": 0,
+      "note": ""
+    },
+    "knee_right": {
+      "level": 0,
+      "note": ""
+    },
+    "shin_left": {
+      "level": 0,
+      "note": ""
+    },
+    "shin_right": {
+      "level": 0,
+      "note": ""
+    },
+    "calf_left": {
+      "level": 0,
+      "note": ""
+    },
+    "calf_right": {
+      "level": 0,
+      "note": ""
+    },
+    "ankle_left": {
+      "level": 0,
+      "note": ""
+    },
+    "ankle_right": {
+      "level": 0,
+      "note": ""
+    },
+    "foot_left": {
+      "level": 0,
+      "note": ""
+    },
+    "foot_right": {
+      "level": 0,
+      "note": ""
+    },
+    "glute_left": {
+      "level": 0,
+      "note": ""
+    },
+    "glute_right": {
+      "level": 0,
+      "note": ""
+    }
+  }
+}

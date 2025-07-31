@@ -1,0 +1,19 @@
+.nav-bar {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1rem 2rem;
+  background: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  font-weight: bold;
+}
+
+.nav-bar a {
+  text-decoration: none;
+  color: #007bff;
+  font-size: 1.1rem;
+}
+
+.nav-bar a.active {
+  text-decoration: underline;
+  color: #0056b3;
+}

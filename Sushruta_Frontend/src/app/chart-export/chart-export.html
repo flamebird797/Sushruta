@@ -1,0 +1,33 @@
+<div id="export-pdf-container" class="export-wrapper">
+  <h2>{{ chartName }} <span style="font-weight: normal;">(User: {{ userId }})</span></h2>
+
+  <!-- Side-by-side 3D Screenshots -->
+<div class="svg-pair" *ngIf="frontImage?.url && backImage?.url">
+  <img [src]="frontImage.url" class="svg-panel" alt="Front View" />
+  <img [src]="backImage.url" class="svg-panel" alt="Back View" />
+</div>
+
+  <h3>Region Notes</h3>
+  <table class="notes-table">
+    <thead>
+      <tr><th>Region</th><th>Pain Level</th><th>Note</th></tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let key of getRegionKeys()">
+  <ng-container *ngIf="regionData[key] as region">
+    <ng-container *ngIf="region[activeMode] != null && region[activeMode]! > 0">
+      <tr>
+        <td>{{ key.replaceAll('_', ' ') }}</td>
+        <td>{{ region[activeMode] }}</td>
+        <td>{{ region.note || '-' }}</td>
+      </tr>
+    </ng-container>
+  </ng-container>
+</ng-container>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 20px;">
+    <button (click)="exportToPDF()">🗎 Export PDF</button>
+  </div>
+</div>
